@@ -1,0 +1,17 @@
+<nav class="sidebar" [class.collapsed]="isCollapsed">
+  <div class="sidebar-brand">
+    <img src="assets/cni.png" alt="CNI Logo" class="logo" />
+    <span class="brand-text" *ngIf="!isCollapsed">GESTION<br />COMMERCIALE</span>
+  </div>
+
+  <div class="nav-container">
+    <ul class="nav flex-column">
+      <li class="nav-item" *ngFor="let item of visibleMenu">
+        <a [routerLink]="item.link" routerLinkActive="active" class="nav-link">
+          <i [class]="item.icon"></i>
+          <span *ngIf="!isCollapsed">{{ item.label }}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

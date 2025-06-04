@@ -1,0 +1,78 @@
+<div class="container">
+  <!-- Back Button -->
+  <div class="button-group">
+    <button routerLink="/app/users" class="btn btn-secondary back-button">
+      <i class="bi bi-arrow-left"></i> Retour
+    </button>
+  </div>
+
+  <!-- Success Message -->
+  <div *ngIf="successMessage" class="alert alert-success" role="alert">
+    {{ successMessage }}
+  </div>
+
+  <h2>Modifier l'utilisateur</h2>
+
+  <form [formGroup]="updateUserForm" (ngSubmit)="onUpdate()">
+    <div class="row">
+      <!-- Nom -->
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name">Nom</label>
+          <input type="text" id="name" class="form-control" formControlName="name" />
+          <div *ngIf="updateUserForm.controls['name'].invalid && updateUserForm.controls['name'].touched" class="text-danger">
+            Nom requis.
+          </div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" class="form-control" formControlName="email" />
+          <div *ngIf="updateUserForm.controls['email'].invalid && updateUserForm.controls['email'].touched" class="text-danger">
+            <span *ngIf="updateUserForm.controls['email'].errors?.['required']">Email requis.</span>
+            <span *ngIf="updateUserForm.controls['email'].errors?.['email']">Entrer un email valide.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Mot de passe -->
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" class="form-control" formControlName="password" />
+          <div *ngIf="updateUserForm.controls['password'].invalid && updateUserForm.controls['password'].touched" class="text-danger">
+            <span *ngIf="updateUserForm.controls['password'].errors?.['required']">Mot de passe requis.</span>
+            <span *ngIf="updateUserForm.controls['password'].errors?.['minlength']">Minimum 6 caractères.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rôle -->
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="role">Rôle</label>
+          <select id="role" class="form-control custom-select" formControlName="role">
+            <option value="" disabled>-- Choisir un rôle --</option>
+            <option value="ADMIN">Admin</option>
+            <option value="USER">User</option>
+            <option value="SUPERUSER">SuperUser</option>
+          </select>
+          <div *ngIf="updateUserForm.controls['role'].invalid && updateUserForm.controls['role'].touched" class="text-danger">
+            Rôle requis.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="down">
+      <button type="submit" class="btn btn-success" [disabled]="updateUserForm.invalid">Modifier</button>
+      <button type="reset" class="btn btn-danger">Réinitialiser</button>
+    </div>
+  </form>
+</div>

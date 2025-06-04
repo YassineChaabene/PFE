@@ -1,0 +1,137 @@
+<div class="client-card">
+  <div class="client-header">
+    <h2>Liste des Factures</h2>
+    <button routerLink="/app/factures/add" class="add-btn">
+      <i class="bi bi-plus-circle me-1"></i> Ajouter
+    </button>
+  </div>
+
+  <div class="client-controls">
+    <div class="filter-row">
+      <div class="filter-select-wrapper">
+        <select [(ngModel)]="selectedFilter" class="custom-select">
+          <option value="reference">Reference</option>
+          <option value="status">Status</option>
+          <option value="conventionCode">Convention</option>
+        </select>
+      </div>
+
+      <div class="filter-input-wrapper">
+        <input
+          type="text"
+          class="filter-input"
+          placeholder="Rechercher par {{ selectedFilter }}"
+          [(ngModel)]="searchValue"
+          (ngModelChange)="applyFilter()"
+        />
+      </div>
+
+      <button
+        *ngIf="searchValue"
+        class="clear-btn"
+        (click)="clearFilter()"
+        title="Effacer"
+      >
+        ✕
+      </button>
+    </div>
+
+    <span class="client-count">
+      Affiche {{ paginatedFactures().length }} parmi {{ factures.length }}
+    </span>
+  </div>
+
+  <div class="client-table-container">
+    <table class="client-table">
+      <thead>
+        <tr>
+          <th (click)="sortTable('reference')">
+            Référence
+            <i *ngIf="sortColumn==='reference'" class="bi" [ngClass]="sortDirection==='asc' ? 'bi-sort-up' : 'bi-sort-down'"></i>
+          </th>
+          <th (click)="sortTable('dateEmission')">
+            Date Émission
+            <i *ngIf="sortColumn==='dateEmission'" class="bi" [ngClass]="sortDirection==='asc' ? 'bi-sort-up' : 'bi-sort-down'"></i>
+          </th>
+          <th (click)="sortTable('dateEcheance')">
+            Date Échéance
+            <i *ngIf="sortColumn==='dateEcheance'" class="bi" [ngClass]="sortDirection==='asc' ? 'bi-sort-up' : 'bi-sort-down'"></i>
+          </th>
+          <th (click)="sortTable('montant')">
+            Montant
+            <i *ngIf="sortColumn==='montant'" class="bi" [ngClass]="sortDirection==='asc' ? 'bi-sort-up' : 'bi-sort-down'"></i>
+          </th>
+          <th (click)="sortTable('status')">
+            Status
+            <i *ngIf="sortColumn==='status'" class="bi" [ngClass]="sortDirection==='asc' ? 'bi-sort-up' : 'bi-sort-down'"></i>
+          </th>
+          <th (click)="sortTable('conventionCode')">
+            Convention
+            <i *ngIf="sortColumn==='conventionCode'" class="bi" [ngClass]="sortDirection==='asc' ? 'bi-sort-up' : 'bi-sort-down'"></i>
+          </th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let f of paginatedFactures()">
+          <td>{{ f.reference }}</td>
+          <td>{{ f.dateEmission | date:'dd/MM/yyyy' }}</td>
+          <td>{{ f.dateEcheance | date:'dd/MM/yyyy' }}</td>
+          <td>{{ f.montant | number:'1.2-2' }}</td>
+          <td>
+            <span
+              class="badge d-inline-flex align-items-center gap-1 px-2 py-1"
+              [ngClass]="{
+                'bg-success': f.status.toLowerCase()==='payée' || f.status.toLowerCase()==='payee',
+                'bg-warning text-dark': f.status.toLowerCase()==='en attente',
+                'bg-danger': f.status.toLowerCase()==='impayée' || f.status.toLowerCase()==='impayee',
+                'bg-secondary': f.status.toLowerCase()==='en retard'
+              }"
+            >
+              <i
+                class="bi"
+                [ngClass]="{
+                  'bi-check-circle-fill': f.status.toLowerCase()==='payée' || f.status.toLowerCase()==='payee',
+                  'bi-hourglass-split': f.status.toLowerCase()==='en attente',
+                  'bi-x-circle-fill': f.status.toLowerCase()==='impayée' || f.status.toLowerCase()==='impayee',
+                  'bi-exclamation-triangle-fill': f.status.toLowerCase()==='en retard'
+                }"
+              ></i>
+              {{ f.status }}
+            </span>
+          </td>
+          <td>{{ f.conventionCode || 'N/A' }}</td>
+          <td class="action-buttons">
+            <button [routerLink]="['/app/facture-update', f.uuid]" class="edit-btn">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+            <button (click)="deleteFacture(f.uuid!)" class="delete-btn">
+              <i class="bi bi-trash3"></i>
+
+            </button>
+            <button (click)="printFacture(f.uuid!)" class="print-btn" title="Imprimer">
+              <i class="bi bi-printer"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <label>
+      Affiche
+      <select [(ngModel)]="itemsPerPage" (ngModelChange)="changePageSize($event)">
+        <option *ngFor="let opt of pageSizeOptions" [value]="opt">{{ opt }}</option>
+      </select>
+      par page
+    </label>
+
+    <div class="page-controls">
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Préc</button>
+      <span>{{ currentPage }}</span>
+      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages()">Suivant</button>
+    </div>
+  </div>
+</div>

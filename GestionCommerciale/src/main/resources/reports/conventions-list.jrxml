@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="conventions-list" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d1091059-074a-42e5-a81b-8a45a5b6bd40">
+	<parameter name="LOGO" class="java.io.InputStream"/>
+	<parameter name="ReportTitle" class="java.lang.String"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="startDate" class="java.time.LocalDate"/>
+	<field name="endDate" class="java.time.LocalDate"/>
+	<field name="client" class="gestionCommerciale.entity.Client"/>
+	<field name="application" class="gestionCommerciale.entity.Application"/>
+	<title>
+		<band height="143">
+			<image>
+				<reportElement x="247" y="30" width="60" height="60" uuid="03e0411f-1635-46d9-96fe-5f85a24b6cd5"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<imageExpression><![CDATA[$P{LOGO}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="65" y="110" width="425" height="30" uuid="cb765f20-6255-44d0-8db1-2ccfb9a5b187"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ReportTitle}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="61">
+			<staticText>
+				<reportElement x="0" y="40" width="80" height="20" uuid="9499619c-6ce3-47e0-b056-1948c39d0a8a"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="40" width="80" height="20" uuid="a60fe703-7fcd-4a67-bede-34621c55c0c6"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Statut]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="40" width="80" height="20" uuid="81a33f74-17bd-4915-94ef-c25e194ce104"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Début]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="40" width="80" height="20" uuid="f0c2b2e8-190d-4cef-9cfb-61c174f346b6"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="320" y="40" width="115" height="20" uuid="d3828358-c6ac-4fda-a284-4cc1e5a69fa2"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Client]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="435" y="40" width="120" height="20" uuid="6a67b4c9-4510-4a79-9809-45328aa3a410"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Application]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22">
+			<textField>
+				<reportElement x="0" y="0" width="80" height="20" uuid="ce61234b-42a0-4b13-b260-9e40b4885e81"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="80" height="20" uuid="2c9cd9d4-9637-4eb1-9f68-d7364a3dd5b5"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="0" width="80" height="20" uuid="8dbd1ab1-18da-4110-a774-51277ee5dae4"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{startDate}.format(
+            java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")
+          )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="80" height="20" uuid="cf2408c6-f64d-4789-b5ee-ba781ae43603"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{endDate}.format(
+            java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")
+          )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="320" y="0" width="115" height="20" uuid="0817e5df-3245-41e1-b940-28891f27d06c"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{client}.getIntitule()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="0" width="120" height="20" uuid="a450ff89-4fc9-41ae-9ac0-b6ddcd03750d"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{application}.getIntitule()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="26">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="c4efbbb3-b375-4a6b-bef6-74ed061c24d9"/>
+				<textElement textAlignment="Center">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[CNI – Gestion Commerciale | © 2025]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

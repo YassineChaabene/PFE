@@ -1,0 +1,84 @@
+<!-- login.component.html -->
+<div class="login-page">
+  <div class="login-card">
+    <!-- CNI logo -->
+    <img
+      src="assets/cni.png"
+      alt="CNI logo"
+      class="logo mb-3"
+    />
+
+    <h2 class="text-center mb-4">Login to Your Account</h2>
+
+    <!-- Global error -->
+    <div *ngIf="errorMessage" class="alert alert-danger text-center">
+      {{ errorMessage }}
+    </div>
+
+    <form #loginForm="ngForm" (ngSubmit)="onLogin()">
+      <!-- Email -->
+      <div class="position-relative mb-4">
+        <input
+          type="email"
+          name="email"
+          id="email"
+          class="form-control custom-input"
+          placeholder=" "
+          required
+          [(ngModel)]="user.email"
+          #emailInput="ngModel"
+        />
+        <label for="email" class="floating-label">E-mail</label>
+        <div *ngIf="emailInput.invalid && emailInput.touched" class="text-danger">
+          Email is required!
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="position-relative mb-4">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          name="password"
+          id="password"
+          class="form-control custom-input"
+          placeholder=" "
+          required
+          [(ngModel)]="user.password"
+          #passwordInput="ngModel"
+        />
+        <label for="password" class="floating-label">Password</label>
+        <div *ngIf="passwordInput.invalid && passwordInput.touched" class="text-danger">
+          Password is required!
+        </div>
+      </div>
+
+      <!-- CAPTCHA -->
+      <div class="captcha-container text-center mb-3">
+        <canvas #captchaCanvas width="150" height="50"></canvas>
+        <button type="button" class="reload-btn" (click)="generateCaptcha()">
+          <i class="bi bi-arrow-clockwise"></i>
+        </button>
+      </div>
+      <div class="text-center mb-4">
+        <input
+          type="text"
+          name="captcha"
+          class="form-control text-center"
+          placeholder="Enter CAPTCHA"
+          required
+          [(ngModel)]="userInput"
+        />
+      </div>
+
+      <!-- Submit -->
+      <button class="btn btn-primary w-100" type="submit">
+        Login <i class="bi bi-arrow-right"></i>
+      </button>
+    </form>
+  </div>
+
+  <!-- (optional) wave-footer exactly as you already have it -->
+  <div class="wave-footer">
+    <!-- your SVG goes here -->
+  </div>
+</div>

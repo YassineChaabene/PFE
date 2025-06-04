@@ -1,0 +1,66 @@
+<nav class="navbar bg-blue shadow-sm px-3">
+  <div class="me-auto">
+    <span class="text-white fs-5 fw-bold">
+      {{ parentTitle }}
+      <i *ngIf="childTitle" class="bi bi-chevron-right mx-2"></i>
+      {{ childTitle }}
+    </span>
+  </div>
+  
+  <div class="navbar-end">
+    <ul class="navbar-nav align-items-center gap-3">
+      <!-- Username -->
+      <li *ngIf="userName" class="nav-item">
+        <span class="nav-link px-2">
+          <i class="fas fa-user-circle me-1"></i>
+          {{ userName }}
+        </span>
+      </li>
+
+      <!-- Notification Bell -->
+      <li *ngIf="showBell" class="nav-item position-relative">
+        <button
+          class="nav-link p-0 position-relative bell-button"
+          (click)="toggleNotifications()"
+          aria-label="Show notifications"
+        >
+          <i class="far fa-bell fa-lg"></i>
+          <span class="nd-number">{{ nbconventions }}</span>
+        </button>
+
+        <div *ngIf="showNotifications" class="notification-dropdown">
+          <div class="nd-header">
+            <span>Conventions bientôt expirées</span>
+            <i class="fas fa-cog nd-icon"></i>
+          </div>
+          <div class="nd-body">
+            <div *ngIf="loading" class="nd-loading">Loading…</div>
+            <ng-container *ngIf="!loading">
+              <div *ngFor="let c of notifications" class="nd-item">
+                <div class="nd-text">
+                  <div class="nd-title">{{ c.code }}</div>
+                  <div class="nd-time">{{ c.endDate | date:'shortDate' }}</div>
+                  <button class="btn btn-outline-primary btn-sm"
+                          (click)="sendEmail(c.client.email, c.code, c.endDate!)">
+                    <i class="bi bi-envelope"></i> Alerte Email
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="notifications.length === 0" class="nd-empty">
+                Pas de conventions expirées
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </li>
+
+      <!-- Logout Button -->
+      <li class="nav-item">
+        <button class="logout-btn d-flex align-items-center" (click)="logout()" title="Déconnexion">
+          <i class="fas fa-sign-out-alt me-1"></i>
+          <span>déconnexion</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>

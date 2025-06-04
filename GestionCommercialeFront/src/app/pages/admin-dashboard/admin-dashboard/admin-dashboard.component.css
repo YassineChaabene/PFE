@@ -1,0 +1,67 @@
+/* src/app/components/admin-dashboard/admin-dashboard.component.css */
+.tabs{
+  margin-top: 60px;
+}
+/* Card styles */
+.card {
+  border: none;
+  border-radius: .75rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+  transition: transform .15s;
+  overflow: hidden;
+}
+.card:hover { transform: translateY(-3px); }
+
+/* Tab cursor */
+.nav-tabs .nav-link { cursor: pointer; }
+
+.sparkline-container { height:60px; margin-top:1rem; }
+.sparkline-line { fill:none; stroke-width:2; stroke-linecap:round; }
+
+/* Colored backgrounds */
+.bg-primary { background-color: #6978fa!important; }
+.bg-info    { background-color: #20a8d8!important; }
+.bg-danger  { background-color: #f86c6b!important; }
+.bg-warning { background-color: #ffc107!important; }
+
+/* admin-dashboard.component.css */
+
+/* admin-dashboard.component.css */
+
+.metric-card {
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+}
+
+.metric-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  border: 2px solid #5FB8E6; /* light-blue accent */
+}
+
+.metric-card .card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #002F6C; /* dark-blue from CNI palette */
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.metric-card .metric-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #5FB8E6; /* light-blue accent */
+  line-height: 1;
+}
+
+
+
+.chart-small {
+  height: 250px;   
+}
+.chart-tiny {
+  height: 180px;    
+}

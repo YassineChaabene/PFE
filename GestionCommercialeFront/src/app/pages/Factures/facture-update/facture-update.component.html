@@ -1,0 +1,87 @@
+<div class="container">
+  <!-- Back Button -->
+  <div class="button-group">
+    <button routerLink="/app/factures" class="btn btn-secondary back-button">
+      <i class="bi bi-arrow-left"></i> Retour
+    </button>
+  </div>
+
+  <!-- Messages -->
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <h2>Modifier la Facture</h2>
+
+  <form [formGroup]="factureForm" (ngSubmit)="updateFacture()">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="reference">Référence</label>
+          <input id="reference" class="form-control" formControlName="reference" readonly />
+          <div *ngIf="factureForm.get('reference')?.invalid && factureForm.get('reference')?.touched" class="text-danger">
+            Référence requise.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="montant">Montant Total</label>
+          <input type="number" id="montant" class="form-control" formControlName="montant" />
+          <div *ngIf="factureForm.get('montant')?.invalid && factureForm.get('montant')?.touched" class="text-danger">
+            Montant requis.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="dateEmission">Date Émission</label>
+          <input type="date" id="dateEmission" class="form-control" formControlName="dateEmission" />
+          <div *ngIf="factureForm.get('dateEmission')?.invalid && factureForm.get('dateEmission')?.touched" class="text-danger">
+            Date Émission requise.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="dateEcheance">Date Échéance</label>
+          <input type="date" id="dateEcheance" class="form-control" formControlName="dateEcheance" />
+          <div *ngIf="factureForm.get('dateEcheance')?.invalid && factureForm.get('dateEcheance')?.touched" class="text-danger">
+            Date Échéance requise.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Statut</label>
+      <select id="status" class="form-control custom-select" formControlName="status">
+        <option value="PAYEE">Payée</option>
+        <option value="IMPAYEE">Impayée</option>
+        <option value="EN ATTENTE">En attente</option>
+        <option value="EN RETARD">En retard</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="conventionUuid">Code Convention</label>
+      <select id="conventionUuid" class="form-control custom-select" formControlName="conventionUuid">
+        <option value="" disabled selected>-- Sélectionner une convention --</option>
+        <option *ngFor="let conv of conventions" [value]="conv.uuid">{{ conv.code }}</option>
+      </select>
+      <div *ngIf="factureForm.get('conventionUuid')?.invalid && factureForm.get('conventionUuid')?.touched" class="text-danger">
+        Convention requise.
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="down">
+      <button type="submit" class="btn btn-success" [disabled]="factureForm.invalid">Modifier</button>
+      <button type="reset" class="btn btn-danger" >Réinitialiser </button>
+    </div>
+  </form>
+</div>

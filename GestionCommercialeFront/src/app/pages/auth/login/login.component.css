@@ -1,0 +1,147 @@
+/* login.component.css */
+
+/* 1) Make host fill screen */
+:host {
+  display: block;
+  height: 100vh;
+  margin: 0;
+}
+
+/* 2) Fullscreen diagonal gradient matching CNI logo colours */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    #0A1F44 0%,
+    #6EB9E5 50%,
+    #A5DBF9 100%
+  );
+  overflow: hidden;
+}
+
+/* 3) The centered white card */
+.login-card {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* 4) Logo inside card */
+.logo {
+  display: block;
+  margin: 0 auto 16px auto;
+  width: 100px;
+  height: 100px;
+}
+
+/* 5) Floating-label inputs */
+.custom-input {
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px 12px;
+  width: 100%;
+  font-size: 16px;
+  transition: border-color .3s, box-shadow .3s;
+  background: white;
+}
+.custom-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0,123,255,0.5);
+}
+.floating-label {
+  position: absolute;
+  top: 33%;
+  left: 14px;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 5px;
+  pointer-events: none;
+  transition: all .3s;
+  color: #777;
+}
+.custom-input:focus + .floating-label,
+.custom-input:not(:placeholder-shown) + .floating-label {
+  top: 0;
+  left: 10px;
+  font-size: 16px;
+  color: #0A1F44;
+}
+
+/* 6) CAPTCHA layout */
+.captcha-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+canvas {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #f8f9fa;
+}
+.reload-btn {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.reload-btn i {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+/* 7) Primary button with arrow animation */
+.btn-primary {
+  background-color: #0A1F44;
+  position: relative;
+  overflow: hidden;
+  transition: background-color .3s, transform .3s;
+}
+.btn-primary:hover {
+  background-color: #f3ff05;
+  color: #0A1F44;
+  border-color: #f3ff05;
+  
+}
+.btn-primary i {
+  display: inline-block;
+  transition: transform .3s ease-in-out;
+}
+.btn-primary:hover i {
+  transform: translateX(5px);
+}
+
+/* 8) Wave footer (behind everything) */
+.wave-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+.wave-footer svg path {
+  animation: waveAnimation 5s infinite linear;
+}
+
+/* 9) Error text */
+.text-danger {
+  font-size: 14px;
+  margin-top: 4px;
+  color: red;
+}
+
+/* (keep any other existing styles—for example your @keyframes shake, .vh-100, etc.—exactly as you had them) */

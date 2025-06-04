@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="button-group">
+    <button routerLink="/app/applications" class="btn btn-secondary back-button">
+      <i class="bi bi-arrow-left"></i> Retour
+    </button>
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success" role="alert">
+    {{ successMessage }}
+  </div>
+
+  <h2>Modifier l'application</h2>
+
+  <form [formGroup]="applicationForm" (ngSubmit)="updateApplication()">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="intitule">Intitulé</label>
+          <input type="text" id="intitule" formControlName="intitule" class="form-control" />
+          <div *ngIf="applicationForm.controls['intitule'].invalid && applicationForm.controls['intitule'].touched" class="text-danger">
+            Intitulé requis.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="abreviation">Abréviation</label>
+          <input type="text" id="abreviation" formControlName="abreviation" class="form-control" />
+          <div *ngIf="applicationForm.controls['abreviation'].invalid && applicationForm.controls['abreviation'].touched" class="text-danger">
+            Abréviation requise.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description" rows="3" class="form-control"></textarea>
+      <div *ngIf="applicationForm.controls['description'].invalid && applicationForm.controls['description'].touched" class="text-danger">
+        Description requise.
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="dateExploitation">Date d'exploitation</label>
+          <input type="date" id="dateExploitation" formControlName="dateExploitation" class="form-control" />
+          <div *ngIf="applicationForm.controls['dateExploitation'].invalid && applicationForm.controls['dateExploitation'].touched" class="text-danger">
+            Date d'exploitation requise.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="responsable">Responsable</label>
+          <select id="responsable" formControlName="responsable" class="form-control custom-select" [compareWith]="compareResponsables">
+            <option value="" disabled>-- Sélectionnez un responsable --</option>
+            <option *ngFor="let resp of responsables" [ngValue]="resp">
+              {{ resp.nom }}
+            </option>
+          </select>
+          <div *ngIf="applicationForm.controls['responsable'].invalid && applicationForm.controls['responsable'].touched" class="text-danger">
+            Responsable requis.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="down">
+      <button type="submit" class="btn btn-success" [disabled]="applicationForm.invalid">Modifier</button>
+      <button type="reset" class="btn btn-danger">Réinitialiser</button>
+    </div>
+  </form>
+</div>

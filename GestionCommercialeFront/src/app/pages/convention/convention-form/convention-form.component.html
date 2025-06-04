@@ -1,0 +1,104 @@
+<div class="container">
+  
+  
+  <div *ngIf="successMessage" class="alert alert-success" role="alert">
+    {{ successMessage }}
+  </div>
+  
+  <div class="button-group">
+    <button routerLink="/app/conventions" class="btn btn-secondary back-button">
+      <i class="bi bi-arrow-left"></i> Retour
+    </button>
+  </div>
+  <h2>Ajouter une Convention</h2>
+  
+  <form [formGroup]="conventionForm" (ngSubmit)="submitForm()">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="code">Code</label>
+          <input type="text" id="code" class="form-control" formControlName="code" />
+          <div *ngIf="conventionForm.controls['code'].invalid && conventionForm.controls['code'].touched" class="text-danger">
+            Code requis
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" class="form-control custom-select" formControlName="status">
+            <option value="" disabled selected>Sélectionner un statut</option>
+            <option value="ACTIVE">Active</option>
+            <option value="ARCHIVED">Archived</option>
+          </select>
+          <div *ngIf="conventionForm.controls['status'].invalid && conventionForm.controls['status'].touched" class="text-danger">
+            Status requis
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="startDate">Date Émission</label>
+          <input type="date" id="startDate" class="form-control" formControlName="startDate" />
+          <div *ngIf="conventionForm.controls['startDate'].invalid && conventionForm.controls['startDate'].touched" class="text-danger">
+            Date Émission requise
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="endDate">Date Fin</label>
+          <input type="date" id="endDate" class="form-control" formControlName="endDate" />
+          <div *ngIf="conventionForm.controls['endDate'].invalid && conventionForm.controls['endDate'].touched" class="text-danger">
+            Date Fin requise
+          </div>
+          <div *ngIf="conventionForm.errors?.['dateRangeInvalid'] && conventionForm.touched" class="text-danger">
+            La date de fin doit être postérieure à la date d'émission.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="client">Client</label>
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Client</mat-label>
+        <input type="text" matInput [formControl]="clientControl" [matAutocomplete]="autoClient">
+        <mat-autocomplete #autoClient="matAutocomplete" autoActiveFirstOption>
+          <mat-option *ngFor="let client of filteredClients | async" [value]="client.intitule" (onSelectionChange)="selectClient(client)">
+            {{ client.intitule }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="conventionForm.controls['clientId'].invalid && conventionForm.controls['clientId'].touched">
+          Client requis
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <label for="application">Application</label>
+      <mat-form-field class="w-100" appearance="fill">
+        <mat-label>Application</mat-label>
+        <input type="text" matInput [formControl]="applicationControl" [matAutocomplete]="autoApp">
+        <mat-autocomplete #autoApp="matAutocomplete" autoActiveFirstOption>
+          <mat-option *ngFor="let app of filteredApplications | async" [value]="app.intitule" (onSelectionChange)="selectApplication(app)">
+            {{ app.intitule }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="conventionForm.controls['applicationId'].invalid && conventionForm.controls['applicationId'].touched">
+          Application requise
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="down">
+      <button type="submit" class="btn btn-primary" [disabled]="conventionForm.invalid">Ajouter</button>
+      <button type="button" class="btn btn-danger" (click)="conventionForm.reset()">Réinitialiser</button>
+    </div>
+  </form>
+</div>

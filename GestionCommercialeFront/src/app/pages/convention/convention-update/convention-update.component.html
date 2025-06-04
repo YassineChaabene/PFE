@@ -1,0 +1,92 @@
+<div class="container">
+ 
+  
+  <div class="button-group">
+    <button routerLink="/app/conventions" class="btn btn-secondary back-button">
+      <i class="bi bi-arrow-left"></i> Retour
+    </button>
+  </div>
+  
+  <div *ngIf="successMessage" class="alert alert-success" role="alert">
+    {{ successMessage }}
+  </div>
+  <h2>Modifier la Convention</h2>
+  
+  <form [formGroup]="conventionForm" (ngSubmit)="updateConvention()">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="code">Code</label>
+          <input type="text" id="code" class="form-control" formControlName="code" readonly />
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" class="form-control custom-select" formControlName="status">
+            <option value="ACTIVE">ACTIVE</option>
+            <option value="ARCHIVED">ARCHIVED</option>
+          </select>
+          <div *ngIf="conventionForm.controls['status'].invalid && conventionForm.controls['status'].touched" class="text-danger">
+            Status requis
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="startDate">Date Émission</label>
+          <input type="date" id="startDate" class="form-control" formControlName="startDate" />
+          <div *ngIf="conventionForm.controls['startDate'].invalid && conventionForm.controls['startDate'].touched" class="text-danger">
+            Date Émission requise
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="endDate">Date Fin</label>
+          <input type="date" id="endDate" class="form-control" formControlName="endDate" />
+          <div *ngIf="conventionForm.controls['endDate'].invalid && conventionForm.controls['endDate'].touched" class="text-danger">
+            Date Fin requise
+          </div>
+          <div *ngIf="conventionForm.errors?.['dateRangeInvalid'] && conventionForm.touched" class="text-danger">
+            La date de fin doit être postérieure à la date d'émission.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="clientId">Client</label>
+      <select id="clientId" class="form-control custom-select" formControlName="clientId">
+        <option *ngFor="let client of clients" [ngValue]="client.id">
+          {{ client.intitule }}
+        </option>
+      </select>
+      <div *ngIf="conventionForm.controls['clientId'].invalid && conventionForm.controls['clientId'].touched" class="text-danger">
+        Client requis
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="applicationId">Application</label>
+      <select id="applicationId" class="form-control custom-select" formControlName="applicationId">
+        <option *ngFor="let app of applications" [ngValue]="app.id">
+          {{ app.intitule }}
+        </option>
+      </select>
+      <div *ngIf="conventionForm.controls['applicationId'].invalid && conventionForm.controls['applicationId'].touched" class="text-danger">
+        Application requise
+      </div>
+    </div>
+
+    <div class="down">
+      <button type="submit" class="btn btn-success" [disabled]="conventionForm.invalid">Modifier</button>
+      <button type="reset" class="btn btn-danger">Réinitialiser</button>
+    </div>
+  </form>
+</div>

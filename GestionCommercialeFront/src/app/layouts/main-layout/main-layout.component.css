@@ -1,0 +1,47 @@
+/* Root layout */
+.app-layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh; /* Full height */
+}
+
+/* Sidebar (app-menu-ui) */
+app-menu-ui {
+  flex: 0 0 220px; /* Sidebar should take up 220px width */
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: linear-gradient(180deg, #073C78 0%, #0A4D99 50%, #5FB8E6 100%);
+  z-index: 1040;;
+}
+
+
+/* Main content (right of sidebar) */
+.main-content {
+  flex: 1;
+  margin-left: 220px; /* Offset content to the right by sidebar width */
+  /* default sidebar width */
+  transition: margin-left 0.3s ease;
+  padding: 2%;
+}
+
+
+/* Navbar at top, full width */
+app-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 1000; /* lower than sidebar */
+}
+
+
+/* Content below the navbar */
+.page-content {
+   /* equal to navbar height */
+   padding: 2%; /* Padding around the content */
+   overflow-y: auto;
+   max-width: 100%; 
+}

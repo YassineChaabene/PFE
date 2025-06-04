@@ -1,0 +1,72 @@
+<div class="container">
+  <!-- Back Button -->
+  <div class="button-group">
+    <button routerLink="/app/users" class="btn btn-secondary back-button">
+      <i class="bi bi-arrow-left"></i> Retour
+    </button>
+  </div>
+
+  <!-- Success Message -->
+  <div *ngIf="successMessage" class="alert alert-success" role="alert">
+    {{ successMessage }}
+  </div>
+
+  <h2>Ajouter un utilisateur</h2>
+
+  <form [formGroup]="userForm" (ngSubmit)="addUser()">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" class="form-control" formControlName="email" />
+          <div *ngIf="userForm.controls['email'].invalid && userForm.controls['email'].touched" class="text-danger">
+            <span *ngIf="userForm.controls['email'].errors?.['required']">Email requis.</span>
+            <span *ngIf="userForm.controls['email'].errors?.['email']">Entrer un email valide.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" class="form-control" formControlName="password" />
+          <div *ngIf="userForm.controls['password'].invalid && userForm.controls['password'].touched" class="text-danger">
+            <span *ngIf="userForm.controls['password'].errors?.['required']">Mot de passe requis.</span>
+            <span *ngIf="userForm.controls['password'].errors?.['minlength']">Minimum 6 caractères.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name">Nom</label>
+          <input type="text" id="name" class="form-control" formControlName="name" />
+          <div *ngIf="userForm.controls['name'].invalid && userForm.controls['name'].touched" class="text-danger">
+            Nom requis.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="role">Rôle</label>
+          <select id="role" class="form-control custom-select" formControlName="role">
+            <option value="" disabled selected>-- Choisir un rôle --</option>
+            <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+          </select>
+          <div *ngIf="userForm.controls['role'].invalid && userForm.controls['role'].touched" class="text-danger">
+            Rôle requis.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="down">
+      <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Ajouter</button>
+      <button type="reset" class="btn btn-danger">Réinitialiser</button>
+    </div>
+  </form>
+</div>

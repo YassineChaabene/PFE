@@ -1,0 +1,113 @@
+<div class="client-card">
+  <!-- Header -->
+  <div class="client-header">
+    <h2>Liste des Conventions</h2>
+    <button routerLink="/app/conventions/add" class="add-btn">
+      <i class="bi bi-plus-circle me-1"></i> Ajouter
+    </button>
+  </div>
+
+  <!-- Filter -->
+  <div class="client-controls">
+    <div class="filter-row">
+      <div class="filter-select-wrapper">
+        <select [(ngModel)]="selectedFilter" class="custom-select">
+          <option value="code">Code</option>
+          <option value="status">Status</option>
+          <option value="applicationName">Application</option>
+          <option value="clientName">Client</option>
+        </select>
+      </div>
+      <div class="filter-input-wrapper">
+        <input
+          type="text"
+          class="filter-input"
+          placeholder="Rechercher par {{ selectedFilter }}"
+          [(ngModel)]="searchValue"
+          (ngModelChange)="applyFilter()"
+        />
+      </div>
+      <button
+        *ngIf="searchValue"
+        class="clear-btn"
+        (click)="clearFilter()"
+        title="Effacer la recherche"
+      >
+        ✕
+      </button>
+      <button
+        class="btn btn-sm btn-primary"
+        (click)="printFiltered()"
+        [disabled]="!canPrint()"
+      >
+        <i class="bi bi-printer me-1"></i> Imprimer
+      </button>
+    </div>
+    <span class="client-count">
+      Affiche {{ paginatedConventions().length }} de {{ conventions.length }}
+    </span>
+  </div>
+
+  <!-- Table -->
+  <div class="client-table-container">
+    <table class="client-table">
+      <thead>
+        <tr>
+          <th (click)="sortTable('code')">Code</th>
+          <th (click)="sortTable('status')">Status</th>
+          <th (click)="sortTable('startDate')">Date Émission</th>
+          <th (click)="sortTable('endDate')">Date Fin</th>
+          <th (click)="sortTable('applicationName')">Application</th>
+          <th (click)="sortTable('clientName')">Client</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let conv of paginatedConventions()" [ngClass]="{ 'expired-row': isExpired(conv.endDate) }">
+          <td>{{ conv.code }}</td>
+          <td>{{ conv.status }}</td>
+          <td>{{ conv.startDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ conv.endDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ conv.application.intitule }}</td>
+          <td>{{ conv.client.intitule }}</td>
+          <td class="action-buttons">
+            <button
+              [routerLink]="['/app/convention-update', conv.uuid]"
+              class="edit-btn"
+            >
+            <i class="bi bi-pencil-square"></i>
+            </button>
+            <button
+              (click)="deleteConvention(conv.uuid!)"
+              class="delete-btn"
+            >
+            <i class="bi bi-trash3"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <label>
+      Affiche
+      <select
+        [(ngModel)]="itemsPerPage"
+        (ngModelChange)="changePageSize($event)"
+      >
+        <option *ngFor="let opt of pageSizeOptions" [value]="opt">
+          {{ opt }}
+        </option>
+      </select>
+      par page
+    </label>
+
+    <div class="page-controls">
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Préc</button>
+      <span>{{ currentPage }}</span>
+      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages()">Suivant</button>
+    </div>
+  </div>
+</div>

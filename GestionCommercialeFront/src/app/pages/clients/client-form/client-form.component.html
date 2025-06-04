@@ -1,0 +1,96 @@
+<div class="container">
+  
+  
+  <div class="button-group">
+    <button routerLink="/app/clients" class="btn btn-secondary back-button">
+      <i class="bi bi-arrow-left"></i> Retour
+    </button>
+  </div>
+  
+  <div *ngIf="successMessage" class="alert alert-success" role="alert">
+    {{ successMessage }}
+  </div>
+  
+  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+    {{ errorMessage }}
+  </div>
+  <h2>Ajouter un Client</h2>
+  
+  <form [formGroup]="clientForm" (ngSubmit)="addClient()">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="code">Code</label>
+          <input type="text" id="code" class="form-control" formControlName="code" />
+          <div *ngIf="clientForm.controls['code'].invalid && clientForm.controls['code'].touched" class="text-danger">
+            Code doit être entre 4 et 6 caractères.
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="intitule">Intitulé</label>
+          <input type="text" id="intitule" class="form-control" formControlName="intitule" />
+          <div *ngIf="clientForm.controls['intitule'].invalid && clientForm.controls['intitule'].touched" class="text-danger">
+            Intitulé requis.
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="telephone">Téléphone</label>
+          <input type="text" id="telephone" class="form-control" formControlName="telephone" />
+          <div *ngIf="clientForm.controls['telephone'].invalid && clientForm.controls['telephone'].touched" class="text-danger">
+            <span *ngIf="clientForm.controls['telephone'].errors?.['required']">Téléphone requis.</span>
+            <span *ngIf="clientForm.controls['telephone'].errors?.['pattern']">Téléphone doit être 8 chiffres.</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" class="form-control" formControlName="email" />
+          <div *ngIf="clientForm.controls['email'].invalid && clientForm.controls['email'].touched" class="text-danger">
+            <span *ngIf="clientForm.controls['email'].errors?.['required']">Email requis.</span>
+            <span *ngIf="clientForm.controls['email'].errors?.['email']">Email non valide.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="adresse">Adresse</label>
+          <input type="text" id="adresse" class="form-control" formControlName="adresse" />
+          <div *ngIf="clientForm.controls['adresse'].invalid && clientForm.controls['adresse'].touched" class="text-danger">
+            Adresse requise.
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="gouvernorat">Gouvernorat</label>
+          <select id="gouvernorat" class="form-control custom-select" formControlName="gouvernorat">
+            <option value="" disabled selected>-- Choisissez gouvernorat --</option>
+            <option *ngFor="let gov of gouvernorats" [value]="gov">{{ gov }}</option>
+          </select>
+          <div *ngIf="clientForm.controls['gouvernorat'].invalid && clientForm.controls['gouvernorat'].touched" class="text-danger">
+            Gouvernorat requis.
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="down">
+      <button type="submit" class="btn btn-primary" [disabled]="clientForm.invalid">Ajouter</button>
+      <button type="reset" class="btn btn-danger">Réinitialiser</button>
+    </div>
+  </form>
+</div>
